@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        /* .triangle {
+            width: 0;
+            height: 0;
+            border-left: 20px solid transparent;
+            border-right: 20px solid transparent;
+            border-bottom: 30px solid red;
+        }
+
+        .line {
+            position: relative;
+        }
+
+        .line::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 200px;
+            height: 1px;
+            background-color: #000;
+            -webkit-transform: scale(.5);
+            transform: scale(.5);
+        } */
+        .flex-container {
+            height: 300px;
+            background-color: pink;
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            /* flex-flow: row-reverse nowrap; */
+            justify-content: flex-start;
+            /* justify-content: flex-end; */
+            /* justify-content: center; */
+            /* justify-content: space-around; */
+            /* justify-content: space-between; */
+            align-items: baseline;
+            align-content: space-around;
+        }
+
+        .flex-item {
+            width: 300px;
+            height: 100px;
+            margin-right: 20px;
+            background-color: yellowgreen;
+
+        }
+
+        /* .flex-item:nth-child(1) {
+            font-size: 22px;
+        }
+
+        .flex-item:nth-child(3) {
+            font-size: 40px;
+        } */
+    </style>
+</head>
+
+<body>
+    <!-- <div class="triangle"></div>
+    <div class="line">
+        <p id="line-1">
+    </div>
+    </p>
+    </div>
+    <p id="para-01"><span>First span</span></p> -->
+    <!-- <div class="flex-container">
+        <div class="flex-item"></div>
+        <div class="flex-item"></div>
+        <div class="flex-item"></div>
+        <div class="flex-item"></div>
+        <div class="flex-item"></div>
+        <div class="flex-item"></div>
+        <div class="flex-item"></div>
+        <div class="flex-item"></div>
+
+    </div> -->
+    <div class="wrapper">
+    </div>
+    <script>
+        // 原生js实现“点赞按钮”
+        // const button = document.querySelector('.like-btn')
+        // const btnText = button.querySelector('.like-text')
+        // let isLiked = false;
+        // button.addEventListener('click', () => {
+        //     isLiked = !isLiked;
+        //     btnText.innerHTML = isLiked ? '取消' : '点赞'
+        // })
+
+        // ::string => ::dom
+        const createDOMFromString = (doSomething) => {
+            const div = document.createElement('div');
+            div.innerHTML = doSomething;
+            return div;
+        }
+
+        class LikeButton {
+            constructor() {
+                this.state = {
+                    isLiked: false
+                }
+            }
+
+            setState(state) {
+                // console.log('setState')
+                const oldEl = this.el;
+                this.state = state;
+                this.el = this.render();
+                console.log('this.onStateChange', this.onStateChange)
+                // if (this.onStateChange) {
+                this.onStateChange(oldEl, this.el);
+                // }
+            }
+
+            changeLikeText() {
+                // console.log("changeLikeText")
+                this.setState({
+                    isLiked: !this.state.isLiked
+                })
+            }
+
+
+            render() {
+                // console.log('render', this.state.isLiked)
+                this.el = createDOMFromString(`
+                <button class="like-btn">
+                    <span class="like-text">${this.state.isLiked ? '取消' : '点赞'}</span>
+                    <span class="like-icon">👍</span>
+                </button>
+                `);
+                console.log('this.el', this.el)
+                this.el.addEventListener('click', this.changeLikeText.bind(this), false)
+                return this.el;
+            }
+
+        }
+        const wrapper = document.querySelector('.wrapper')
+        const btn1 = new LikeButton();
+        wrapper.appendChild(btn1.render());
+        btn1.onStateChange = (oldEl, newEl) => {
+            wrapper.insertBefore(newEl, oldEl);
+            wrapper.removeChild(oldEl);
+        }
+    </script>
+
+    <!-- <script src="./deepClone.js"></script> -->
+    <!-- <script src="./class-demo.js"></script> -->
+    <!-- <script src="./jquery.js"></script> -->
+    <!-- <script src="./closure.js"></script> -->
+    <!-- <script src="./bind.js"></script> -->
+    <!-- <script src="./promise-demo.js"></script> -->
+    <!-- <script src="./async.js"></script> -->
+    <!-- <script src="./dom.js"></script> -->
+    <!-- <script src="./bom.js"></script> -->
+    <!-- <script src="./bindEvent.js"></script> -->
+    <!-- <script src="./jsonp.js"></script> -->
+    <!-- <script src="./ajax.js"></script> -->
+    <!-- <script src="./practice.js"></script> -->
+    <!-- <script src="./debounce.js"></script> -->
+    <!-- <script src="./throttle.js"></script> -->
+    <!-- <script src="./leetcode-÷twoSum.js"></script> -->
+    <!-- <script src="./leetcode-isvalid.js"></script> -->
+    <!-- <script src="./demo.js"></script> -->
+    <!-- <script src="./extend-0.js"></script> -->
+    <!-- <script src="./extend-1.js"></script> -->
+    <!-- <script src="./extend-2.js"></script> -->
+    <!-- <script src="./extend-3.js"></script> -->
+    <!-- <script src="./extend-4.js"></script> -->
+    <!-- <script src="./extend-5.js"></script> -->
+    <!-- <script src="./extend-6.js"></script> -->
+    <!-- <script src="./extend-7.js"></script> -->
+    <!-- <script src="./lazyMan.js"></script> -->
+    <!-- <script src="./find.js"></script> -->
+    <!-- <script src="./fibnaqie.js"></script> -->
+    <!-- <script src="./test.js"></script> -->
+
+    <!-- <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.1.0/jquery.js"></script> -->
+    <script>
+        // $.ajax({
+        //     url: 'http://localhost:8002/remote-data.js?callback=cb',
+        //     dataType: 'jsonp',
+        //     jsonpCallback: 'cb',
+        //     success: function (data) {
+        //         console.log('data', data)
+        //     }
+        // })
+        // var line = document.getElementsByClassName('line')[0];
+        // console.log('line', line)
+        // var frag = document.createDocumentFragment();
+        // // var child = line.firstChild;
+        // alert(line.firstChild.nodeName)
+        // // frag.append(child);
+        // console.log('frag', frag)
+        // var p01 = document.getElementById('para-01');
+        // // alert(p01.firstChild)
+
+
+
+
+    </script>
+</body>
+
+</html>

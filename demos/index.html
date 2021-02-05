@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="../build/react.development.js"></script>
+    <script src="../build/react-dom.development.js"></script>
+    <script src="../build/babel.min.js"></script>
+    <script src="../build/jquery.min.js"></script>
+    <script src="../build/prop-types.js"></script>
+    <!-- <script src="../build/react.js"></script> -->
+</head>
+
+<body>
+    <div id="example"></div>
+    <script type="text/babel">
+        // 1. render
+        ReactDOM.render(
+            <h1>hello world!</h1>,
+            document.getElementById('example')
+        )
+        // 2.Html与javaScript混写
+        var names = ['lily', 'amy', 'alex'];
+        ReactDOM.render(
+            <div>
+                {
+                    names.map((item, index) => {
+                        return <div key={index}>hello,{item}</div>;
+                    })
+                }
+
+            </div>,
+            document.getElementById('example')
+        )
+        // 3.直接插入变量
+        const arr = [<div key="1">hello world</div>, <div key="2">it is me</div>]
+        ReactDOM.render(
+            <div>{arr}</div>,
+            document.getElementById('example')
+        );
+        // 4.类组件
+        // 类组件名称必须大写，且render中只能包含一个顶层标签
+        class HelloWord extends React.Component {
+            render() {
+                return <div>hello {this.props.name}</div>
+            }
+        };
+        ReactDOM.render(
+            <HelloWord name="xiaoming" />,
+            document.getElementById('example')
+        )
+        // 5. this.props.children  组件所有子节点
+        // 没有子节点，返回undefined; 一个子节点，返回Object类型; 2个及以上子节点，返回Array类型;
+        // React.Children.map可以来遍历子节点，不用关心其类型
+        class NotesList extends React.Component {
+            render() {
+                return (
+                    <ol>
+                        {React.Children.map(this.props.children, function (child) {
+                            return <li>{child}</li>
+                        })}
+                    </ol>
+                )
+            }
+        }
+        ReactDOM.render(
+            <NotesList>
+                <span>hello</span>
+                <span>world</span>
+            </NotesList>,
+            document.getElementById('example')
+        );
+        // 6.验证组件实例的属性PropTypes
+        // class MyTitle extends React.Component {
+        //     static propTypes = {
+        //         title: PropTypes.string.isRequired
+        //     }
+        //     render() {
+        //         return <h1>{this.props.title}</h1>
+        //     }
+        // }
+        // var data = '123';
+        // ReactDOM.render(
+        //     <MyTitle title={data} />,
+        //     document.getElementById('example')
+        // )
+        // 7.使用getDefaultProps可以给属性设置初始值
+        // 仅适用于React.createClass创建的组件
+        // class MyTitle6 extends React.Component {
+        //     getDefaultProps() {
+        //         return {
+        //             title: 'hello world!!!'
+        //         }
+        //     }
+        //     render() {
+        //         return <h1>{this.props.title}</h1>
+        //     }
+        // }
+        // ReactDOM.render(
+        //     <MyTitle6 />,
+        //     document.getElementById('example')
+        // )
+        // 8.使用ref获取dom
+        class MyComponent extends React.Component {
+            constructor(props) {
+                super(props);
+                this.textInput = React.createRef();
+                this.handleClick = this.handleClick.bind(this);
+            }
+            handleClick() {
+                this.textInput.current.focus();
+            }
+            render() {
+                return (
+                    <div>
+                        <input type="text" name="" id="" ref={this.textInput} />
+                        <input type="button" value="focus the text input" name="" id="" onClick={this.handleClick} />
+                    </div>
+                )
+            }
+        }
+
+        ReactDOM.render(
+            <MyComponent />,
+            document.getElementById('example')
+        )
+        // 9.this.state 定义组件属性
+        class LikedButton extends React.Component {
+            constructor(props) {
+                super(props)
+                this.state = {
+                    liked: false
+                }
+            }
+            getInitialState() {
+                return {
+                    liked: false
+                }
+            }
+            render() {
+                var text = this.state.liked ? 'liked' : 'haven\'t like';
+                return (
+                    <p>
+
+                    </p>
+                )
+            }
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+    </script>
+
+</body>
+
+</html>
