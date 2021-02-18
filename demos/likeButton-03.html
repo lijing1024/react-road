@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>使用react的点赞组件</title>
+    <script src="../build/react.development.js"></script>
+    <script src="../build/react-dom.development.js"></script>
+    <script src="../build/babel.min.js"></script>
+    <script src="../build/jquery.min.js"></script>
+    <script src="../build/prop-types.js"></script>
+</head>
+
+<body>
+    <div id="wrapper"></div>
+
+
+
+    <script type="text/babel">
+
+        // 点赞组件继承自React.Component
+        class LikeButton extends React.Component {
+            constructor(props) {
+                super(props);
+                this.state = { isLiked: false };
+            }
+            handleClick() {
+                // this.setState({
+                //     isLiked: !this.state.isLiked,
+                //     count: 0
+                // })
+                // this.setState({
+                //     count: this.state.count + 1
+                // }, () => {
+                //     console.log('this.state.count', this.state.count)  //undefined + 1   NaN
+                // })
+                this.setState((prevState) => {
+                    return { count: 0 }
+                })
+                this.setState((prevState) => {
+                    return { count: prevState.count + 1 }
+                }, () => {
+                    console.log('this.state.count', this.state.count)
+                })
+                this.setState((prevState) => {
+                    return { count: prevState.count + 2 }
+                })
+            }
+            render() {
+                console.log('render')
+                return (
+                    <button className="like-btn" onClick={this.handleClick.bind(this)}>
+                        <span className="like-text">{this.state.isLiked ? '取消' : '点赞'}</span>
+                        {this.state.isLiked ? null : <span className="like-icon">👍</span>}
+                    </button>
+                )
+            }
+        }
+        ReactDOM.render(
+            <LikeButton />,
+            document.getElementById('wrapper')
+        )
+
+
+    </script>
+
+</body>
+
+</html>
