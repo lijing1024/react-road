@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>使用react的点赞组件-props</title>
+    <script src="../build/react.development.js"></script>
+    <script src="../build/react-dom.development.js"></script>
+    <script src="../build/babel.min.js"></script>
+    <script src="../build/jquery.min.js"></script>
+    <script src="../build/prop-types.js"></script>
+</head>
+
+<body>
+    <div id="wrapper"></div>
+
+
+
+    <script type="text/babel">
+
+        // 点赞组件继承自React.Component
+        class LikeButton extends React.Component {
+            constructor(props) {
+                super(props);
+                this.state = { isLiked: false };
+            }
+            handleClick() {
+                if (this.props.onClick) {
+                    this.props.onClick();
+                    return
+                }
+                this.setState({
+                    isLiked: !this.state.isLiked,
+                    count: 0
+                })
+            }
+            render() {
+                // const likedText = this.props.likedText || '取消';
+                // const unLikedText = this.props.unLikedText || '点赞';
+                const text = this.props.words || {
+                    likedText: '取消',
+                    unLikedText: '点赞'
+                }
+                return (
+                    <button className="like-btn" onClick={this.handleClick.bind(this)}>
+                        <span className="like-text">{this.state.isLiked ? text.likedText : text.unLikedText}</span>
+                        {this.state.isLiked ? null : <span className="like-icon">👍</span>}
+                    </button>
+                )
+            }
+        }
+        // 组件使用的时候传入props
+        class Index extends React.Component {
+            constructor(props) {
+                super(props)
+            }
+            render() {
+                return (
+                    <div>
+                        {/* 传入字符串 */}
+                        {/* <LikeButton likedText="已赞" unLikedText="赞" /> */}
+                        {/* 传入对象 */}
+                        <LikeButton words={{ likedText: '已赞', unLikedText: '赞' }} />
+                        {/* 传入函数 */}
+                        <LikeButton onClick={() => { console.log('click on button') }} />
+                    </div>
+                )
+            }
+        }
+        ReactDOM.render(
+            <Index />,
+            document.getElementById('wrapper')
+        )
+
+
+    </script>
+
+</body>
+
+</html>

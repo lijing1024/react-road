@@ -26,7 +26,7 @@ function App() {
         <div className="App">
             <Title ></Title>
             <header className="App-header">
-                <img src={logo} className="App-logo" alt="logo" />
+                {/* <img src={logo} className="App-logo" alt="logo" /> */}
                 <p>
                     hello react
                 </p>
